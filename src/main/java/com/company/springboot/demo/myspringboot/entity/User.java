@@ -1,9 +1,11 @@
 package com.company.springboot.demo.myspringboot.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,14 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,6 +36,14 @@ public class User {
 	@NotEmpty
 	@Email
 	private String email;
+	@CreatedBy
+	private String createdBy;
+	@LastModifiedBy
+	private String lastModifiedBy;
+	@CreatedDate
+	private LocalDateTime createDate;
+	@LastModifiedDate
+	private LocalDateTime lastModifiedDate;
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 			name="user_roles",
@@ -34,12 +51,9 @@ public class User {
 			inverseJoinColumns=	{ @JoinColumn(name="ROLE_ID" , referencedColumnName = "ID")}
 	)
 	private List<Role> roles;
-	public User() {
-		
-	}
+	public User() {}
 	
-	
-	public User(User user) {
+public User(User user) {
 		
 		this.id = user.getId();
 		this.username = user.getUsername();
@@ -47,6 +61,44 @@ public class User {
 		this.email = user.getEmail();
 		this.roles = user.getRoles();
 	}
+
+
+	
+	public String getCreatedBy() {
+	return createdBy;
+}
+
+public void setCreatedBy(String createdBy) {
+	this.createdBy = createdBy;
+}
+
+public String getLastModifiedBy() {
+	return lastModifiedBy;
+}
+
+public void setLastModifiedBy(String lastModifiedBy) {
+	this.lastModifiedBy = lastModifiedBy;
+}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+
+	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 
 	
 	public List<Role> getRoles() {
