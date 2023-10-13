@@ -30,17 +30,7 @@ public class LoginController {
 		User user=(User) auth.getPrincipal();
 		
 		model.addAttribute("username",request.getUserPrincipal().getName());
-		System.out.println("000 ::" + request.getUserPrincipal().getName());
-		System.out.println("111111 ::" + auth.getPrincipal());
-		System.out.println("222 ::" + auth.getName());	
-		System.out.println("3333 ::" + auth.getCredentials());
-		System.out.println("444 ::" + auth.getAuthorities().getClass());
-		System.out.println("55 ::" + auth.getDetails());
-		System.out.println("################ ::" );
-		System.out.println("the username :: "+user.getUsername());
-		System.out.println("the email :: "+user.getEmail());
-		System.out.println("the createdDate :: "+user.getCreateDate());
-		System.out.println("the created By :: "+user.getCreatedBy());
+		
 
 
 		
